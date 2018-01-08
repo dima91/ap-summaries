@@ -94,9 +94,49 @@ JVM support three *addressing modes*: **immediate a.m.** (constant is part of in
 - has typed instructions (different opcodes for instruction for integers, floats, arrays, references types, ..);
 - non-orthogonality of the IS;
 - *byte*, *char* and *short* wrapped into *int* computational type;
-- accessing locals and arguments: load & store;
-- accessing fields in objects: getfield & putfield;
-- accessing static fields (allocated in the method area): getstatic & putstatic;
--
+- accessing locals and arguments: *load* & *store*;
+- accessing fields in objects: *getfield* & *putfield*;
+- accessing static fields (allocated in the method area): *getstatic* & *putstatic*;
 
-**RIPRENDI DALLA SLIDE 19**
+**Method invocation and return**  
+- *invokevirtual* for calling method on an object
+- *invokeinterface* for calling methods declared in an interface
+- *invokespecial* for calling constructors (not dinamically dispatched), private methods or supercalss methods
+- *invokestatic* for calling static methods
+- *invokedynamic* see **a first taste of invokedynamic**
+
+**Special instructions**  
+- *new* to create an object
+- *newarray* for array of primitive types
+- *anewarray*, *multianewarray* for array of reference types
+- *monitorenter*, *monitorexit* for critcal sections
+- *nop* no operation
+- *athrow* for exceptions
+
+
+
+## S_07
+**Software Components**  
+A software component is a *unit of composition* with *contractually specified interfaces* and *explicit context dependencies* only. A software component can be *deployed indipendently* and is subject to composition by third parties.  
+A *contract* is a specification attached to an interface that mutually blinds clients and providers of the components. A contract specifies more than dependencies and interfaces: specifies how the component can be deployed, can be instantiated, the instances behave through the advertised interfaces. *Context dependencies* are specifications of the deployment environment and run-time environment
+
+
+**SC characteristics**  
+- modular (compatble, reusable, extensible)
+- reliable (correct, robust)
+- efficent
+- portable
+- timely
+- are provided as binary units, without source code
+
+**Basic concepts of component model**  
+- *Component interface*: describes the operationsthat a component implements and that other components may use
+- *Composition mechanism*: the manner which different components can be composed to work together to accomplish some tasks
+- *Component platform*: a platform for the development and execution components
+
+**Modules vs. components**  
+*Modules* are the main feature of programming languages for supporting development of large applications (teams of programmers can work on separate modules in a project). M are an abstraction mechanism: collections of data with operations defined on them.  
+***Modules are part of program, components are part of system***. Component can be anything and can contains anything.  
+*Experience has shown that the use of OO doesn't necessarily produce reusable software*.
+
+**CONTINUA DALLA SLIDE 7.21**
