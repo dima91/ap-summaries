@@ -1,6 +1,6 @@
 # AP Summaries
 
-## S_02
+## ***S_02***
 **Software FW =>** Collecion of common code providing generic functionality that can be selectively ovirridden or specialzed by user code providing specific functionality  
 **Application FW =>** A sw. framework used to implement the standard structure of an application for a specific development environment.  
 A S.FW, like SW Libraries, provide *REUSABLE ABSTRACTIONS* of code wrapped in a well-defined API. Unlike libraries, FWs use the **Inversion of Control**: the overall program's flow control is dicted by the FW.
@@ -9,7 +9,7 @@ A S.FW, like SW Libraries, provide *REUSABLE ABSTRACTIONS* of code wrapped in a 
 
 **Design Patterns =>** general conceptual solutions to current design problems. More abstract than FWs, smaller architectural elements than FWs, less specialized than FWs.
 
-## S_03
+## ***S_03***
 A **Program Language** is defined via *SYNTAX*, *SEMANTICS* and *PRAGMATICS*.  
 The **Sytnax** is concerned with the form of programs: how expressions, commands, declaration and other constructs must be arranged to make a well-formed program. Used by compiler for *scanning* and *parsing*.  
 The **Semantics** is concerned with the meaning of (well-formed) programs: how a program may be expected to behave when executed on a computer. Usually described precisally, but informally, in natural language.  
@@ -55,7 +55,7 @@ Using VMs involves higher *portability* (compile source, distribute the intermed
 3. Compilation, assembly and dynamic linking
 
 
-## S_04, S_05
+## ***S_04***, ***S_05***
 Every programming language defines an **Execution Model**.  
 A **Runtime System** implemnts (part of) such EM, providing support during the execution of corresponding programs.  
 The **Runtime Support** is needed both by interpreted and by compiled programs, even if tipically less by the latter.  
@@ -69,7 +69,7 @@ Its specification doesn't give implementation details but defines constraints, w
 *For other details see **JVM Internals!** pdf.*
 
 
-## S_06
+## ***S_06***
 **JVM Interpreter loop**  
 ```
 do {
@@ -115,7 +115,7 @@ JVM support three *addressing modes*: **immediate a.m.** (constant is part of in
 
 
 
-## S_07
+## ***S_07***
 **Software Components**  
 A software component is a *unit of composition* with *contractually specified interfaces* and *explicit context dependencies* only. A software component can be *deployed indipendently* and is subject to composition by third parties.  
 A *contract* is a specification attached to an interface that mutually blinds clients and providers of the components. A contract specifies more than dependencies and interfaces: specifies how the component can be deployed, can be instantiated, the instances behave through the advertised interfaces. *Context dependencies* are specifications of the deployment environment and run-time environment
@@ -139,4 +139,51 @@ A *contract* is a specification attached to an interface that mutually blinds cl
 ***Modules are part of program, components are part of system***. Component can be anything and can contains anything.  
 *Experience has shown that the use of OO doesn't necessarily produce reusable software*.
 
-**CONTINUA DALLA SLIDE 7.21**
+**Component forms**  
+There are several way which a component could have: **-> CHECK ME!**
+- ***Component Specification***: the specification of a unit of software that describes the behavior (defined as a set of interfaces) of a set of *Component Objects* and defines a unit of implementation. A Comp. Spec. is realized as a *Component Implementation*
+- *Component Interface*: a definition of a set of behaviors that can be offeredby a *Component Object*
+- *Component Implementation*: a sealization of a *Component Specification*, which is indipendently deployable. This means it can be installed and replaced indipendently of other components (not that is indipendent of other comp.)
+- *Installed Component*: an installed/deployed copy of a *Component Implementation*
+- *Component Object*: and instance of an *Installed Component*. It is a runtime concept, an object with its own data anda a unique identity. An *Installed Component* may have a multiple *Component Objects* or a single one
+
+
+**Component Based Software Engeneering**
+- The basis is the component
+- Components can be assembled according to the rules specified by the component model
+- Components are assembled through through their interfaces
+- A **Component Composition** is the process of assembling components to form an assembly, a larger component or an application
+- Component are performing in the context of a component framework
+- All parts conform to the component modelled- A component technology is a concrete implementation of a component model
+
+
+## ***S_08***
+
+***TODO***
+
+
+## ***S_09***
+
+**The JavaBeans API**  
+A Java Bean is a reusable software component model that can be manipulated visually in a builder tool (builders for web pages, visual applications, GUI layout, server applications, document editors, ...). Is a platform-neutral component architecture for reusable software component. Is a black box component to be used to build large component or application.  
+Was defined a software component model for java, allowing vendors to create and ship java components that can be composed together into applications by end user.  
+
+Characteristics:
+- *granularity*: from small to medium
+- *portability*
+- *uniformity and semplicity*
+- support for *properties*, both for customization and for programmatic use
+- support for *events*, to connect several beans together
+- support for *customization*, to customize the appearance and behavior of bean in an application builder
+- support for *persistance*: after customization, a bean have its customized state saved away and can be reloaded later
+- support for *introspection*: a builder tool can analyze how the bean works
+- support for **Observer** design pattern, also known as **Publish-Subscribe**. In this case, an **event** is an object created by an *event source* and propagated to the registered *event listeners* (other beans)
+- support for *event adaptors*, placed between the event source and listeners (it is at the same time a listener and a source)
+
+
+A **Bound Property** generatesan event when the property is changed.  
+A **Constrained Property** can only change value if none of the registered observer pose a *veto*. Once the property change, a *PropertyChangeEvent* event is generated and it is sent to objects that previously registered an interest in receiving such notifications.
+
+## ***S_10***
+
+***TODO***
