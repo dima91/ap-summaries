@@ -186,4 +186,50 @@ A **Constrained Property** can only change value if none of the registered obser
 
 ## ***S_10***
 
-***TODO***
+**Reflection, Introspection, Intercession**  
+*Reflection* is the ability of a program to manipulate as data something representing the state of the program during its own execution.  
+*Introspection* is the ability of a program to read information about itself  
+*Intercession* is the ability of a program to modify its own state through the description of itself.  
+There are different levels which a system can support reflection: from simple information on types to reflecting entire structure of the program.  
+Reflective capabilities need special support at the levels of language and compiler
+
+**Cons**
++ *performance overhead*
++ *security restrictions*
++ *exposure of internals*
+
+**In Java**  
++ java supports *inrospection* and *reflexive invocation*, but not code modification;
++ for every type, the JVM maintains an associated object of class *java.lang.Class*, which reflects the type it representd. It is the entry point of reflection;
++ three type of class memebers: *fields*, *methods*, *constructors* (thanks to **Member** interface, **Field**, **Method**, **Constructor** classes);
++ several methods to get infos about them;
++ for each memeber, the reflection API provides support to retreive declaration and type information, and operations unique to the member;
++ *Field* objects have type and value and can be setted or got; **FIXME**
++ *Method* objects have return values, parameters and may throw exceptions. They can be invoked on a given object;
++ *Constructor* objects are similar to methods but they haven't return value and an invocation of a constructor creates an object;
+
+
+** In .NET**  
++ you can enumerate modules and types of an assembly;
++ obtain several infos for each type;
++ create istances of a types and invoke methods;
+
+
+
+## ***S_11***
+
+**Frameworks (cont.)**  
+They support **inversion of control**: in order to use it, you need to insert your behavior into various places in the framework either by subclassing or by plugging in your own classes.  
+FW, like libraries, provide reusable abstractions of code wrapped in a well-defined API.  
+A FW is inteded to be extended to meet the needs of a particular application.
+Two general topics: **Inversion of Control** and **Mastering dpendencies among components**.  
+
+
+**Component Frameworks**  
+Frameworks that supports:
++ *development*, *deployment*, *composition*, *execution* of components designed accordign to a given **Component model**
++ the development of individual component
++ the composition/connection of components
++ provide **prebuilt unctionalities** such as usefule components or automated assembly functions
+
+ ### continua da 11.17
