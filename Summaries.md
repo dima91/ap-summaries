@@ -223,6 +223,8 @@ They support **inversion of control**: in order to use it, you need to insert yo
 FW, like libraries, provide reusable abstractions of code wrapped in a well-defined API.  
 A FW is inteded to be extended to meet the needs of a particular application.
 Two general topics: **Inversion of Control** and **Mastering dpendencies among components**.  
+In a FW the application architecture is often fixed, even if customizabe, and determined by the FW.  
+They provides **containers** for deploying components, which may provide at runtime functionalities needed by component to execute.
 
 
 **Component Frameworks**  
@@ -232,4 +234,42 @@ Frameworks that supports:
 + the composition/connection of components
 + provide **prebuilt unctionalities** such as usefule components or automated assembly functions
 
- ### continua da 11.17
+**Advantages and techniques of loosely coupled systems**  
+**TODO** -> *Factory and ServiceLocator, Reflection, auto-wiring*
+
+
+## ***S_12***
+
+The **Polymorphism** is the possibility of the same function or type to have many forms.  
+It has two main forms: **Universal** or **Ad hoc**.  
+With **universal polymorphism** the same function denotes different algorithms, determined by the actual types.  
+With **ad hoc polymorphism** there is onl one algorithm: a single (universal) solution applies to different objects.
+
+**Binding time**  
+The BT of the unction name with the actual code to execute can be: at *compile time* (early/static binding), at *linking time*, at *execution time* (late/dynamic binding)
+
+**Type of polymorphism**
++ **ad hoc**
+  + **overloading**: present in all languages, at least for built-in arithmetic operators. The code to execute is determined by the type of the arguments: *early binding* in statically typed languages, *late binding* in dynamically typed languages.
+  + **overriding**: redefinition of method *m* of class *A* in a sublcass *B* of *A*. Resolved at runtime by the lookup done by the invokevirtual operation of JVM.
++ **universal**
+  + **coercion** : automatic (implicit) conversion of an object to a different type. opposed to *casting* which is explicit.
+  + **parametric**
+    + **implicit**
+    + **expicit**
+      + **bounded**
+  + **inclusion**
+    + **overriding**
+    + **bounded**
+
+**Inclusion polymorphism**  
+aAlso known as *subtyping polymorphism*, or just **inheritance**.  
+(from Liskov) *substitution principle*: an object of a subtype can be used in any context where an object of the supertype is expected.
+
+**Parametric polymorphism** or **generic programming**  
++ **C++ templates**: each concrete instantiation produces a copy of the generic code, specialized for that type. Supports parametric polymorphism. Compiler choose template that i s the best match;
++ **Java generics**:
+
+
+**STL**  
+Represent algorithms in as general form as possible without compromising efficiency. Extensive use of templates adn overloading. Efficent example of generic programming. Only use static binding (and inlining) and iterators.
