@@ -403,3 +403,19 @@ The signatue of the referenced method needs to match the signature of the functi
 
 
 ## ***S_18***
+
+the *java.util.stream* package provides utilities to support functional-style operations on streams of values. **Streamss** differs from collections in several ways: they haven't *storage* (a stream is not a data structure that stores elements) and are *functional in nature* (an operation on a stream produces a result, but doesn't modify its source).  
+properties:
+- many stream operations can be implemented lazily, exposing opportunities for optimization. Stream operations are divided into **intermediate** operations and **terminal** operations.  
+*Intermediate operations are always lazy*.
+- they are possibly **unbounded**: collection have finite size, streams need not. Short-circuiting operations such as *limit(n)* or *findFirst()* can allow computations on infinite streams to complete in finite time.
++ the elements of a stream are only visited once during the life of a stream.
+
+A pipeline of operations contains: a **source** (which produce the elements of the stream), zero or more **intermediate operations** (lazy operations, which produce streams) and a **terminal operation** (which produces side-effects or non-stream values).  
+Intermediate operations are performed on the stream elements and they are not processed until the terminal method is called.  
+A stream is considered consumed when a terminal operation is invoked.
+
+
+
+
+# continua da 18.10
