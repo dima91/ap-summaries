@@ -253,8 +253,8 @@ The BT of the unction name with the actual code to execute can be: at *compile t
   + **overloading**: present in all languages, at least for built-in arithmetic operators. The code to execute is determined by the type of the arguments: *early binding* in statically typed languages, *late binding* in dynamically typed languages.
   + **overriding**: redefinition of method *m* of class *A* in a sublcass *B* of *A*. Resolved at runtime by the lookup done by the invokevirtual operation of JVM.
 + **universal**
-  + **coercion** : automatic (implicit) conversion of an object to a different type. opposed to *casting* which is explicit.
-  + **parametric**
+  + **coercion**: automatic (implicit) conversion of an object to a different type. opposed to *casting* which is explicit.
+  + **parametric**: *C++ templates* and *Java generics*
     + **implicit**
     + **expicit**
       + **bounded**
@@ -272,4 +272,52 @@ aAlso known as *subtyping polymorphism*, or just **inheritance**.
 
 
 **STL**  
-Represent algorithms in as general form as possible without compromising efficiency. Extensive use of templates adn overloading. Efficent example of generic programming. Only use static binding (and inlining) and iterators.
+Represent algorithms in as general form as possible without compromising efficiency. Extensive use of templates adn overloading. Efficent example of generic programming. Only use static binding, inlining, and iterators (fordecoupling algorithms from containers): not object oriented and no dynamic binding
+
+
+
+## ***S_13***
+**C++ templates**  
+Support parametric polymorphism, type parameters can also be primitive types.  
+*Compiler/linker automatically generates one version of each parameter type used by a program*.  
+A (function or class) primary template can be specialized by defining another template with *same name* and more specific parameters (*partial specialization*) or no parameter (*full specialization*). This case is similar to overriding and compiler chooses most specific applicable template.  
+**Macros** can be used for polymorphism in simple cases. They are executed by preprocessor (different from templates which are executed by the compiler).
+
+
+**C++ template instantiation**  
+1 compiler choose template that is best match
+2 template instance is created (similar to syntactic substitution of parameters)
+3 overloading resolution after substitution (fails if some operator is not defined for the type instance)
+
+*The compiler need both the declaration and the definition of the template function to instantiate it*: cannot compile definition of template and code instantiating the template searately!
+
+*Main entties*: containers, iterators, algorithms, adapter, function object,allocator
+
+
+**Java generics**  
+Case of *Explicit parametric polymorphism*. Classes, Interaces and Methods can have type parameters. The type parameters can be used arbitrarly in the definition. They can be instantiated by providing arbitrary (reference) type arguments.  
+They permits  *upper bounds* (extends), *lower bounds* (super), *multiple upper bounds*.  
+Type bounds for methods guarantee that the type argument supports the operations used in the method body.  
+Type checking ensures that overloading will succeded (different from C++)  
+*Subtyping in Java is **invariant** for generic classes* (if T2 and T3 are different, then T1<T2> is not a subtype of T1<T3>).  
+EG. Array<T2> and Array<T3> are not related by subtyping. But instead, if T2 is subype of T3, then T2[] is subtype of T3[]. Thus *Java (raw) arrays are covariant*.
+
+**Java rules**
+- Given two concrete types *A* and *B*, *MyClass<A>* has no relationship to *MyClass<B>*, regardless of wether or not *A* and *B* are related. *Subtyping in Java is invariant for generic classes.*
+- If *A* extends *B* and they are generic classes, for each type *C* we have that *A<C>* extends *B<C>*.
+
+An operator is **Covariant** if maintains subtyping relationship.  
+An operator is **Contravariant** if inverts subtyping relationship.  
+For wach reference variable, the dynamic type must be a subtype of the static one.
+
+**Wildcards**
+*? extends T* denotes an unknown subtype of T
+*?* shorthand for *? extends Object*
+*? super T* denotes an unknown  subtype of T
+
+**PECS (Producer Extends, Consumer Super) principle**
++ use *? extends T* when you want to get values: supports *covariance*
++ use *? super T* when you want to insert values: supports *contravariance*
++ never use *?* when you both obtain and produce values!
+
+** Type erasure**: all type of parameters of generic types are transformed to Object or to their first bound after compilation
