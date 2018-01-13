@@ -321,3 +321,85 @@ For wach reference variable, the dynamic type must be a subtype of the static on
 + never use *?* when you both obtain and produce values!
 
 ** Type erasure**: all type of parameters of generic types are transformed to Object or to their first bound after compilation
+
+## ***S_15***
+
+**Church's thesis**  
+Any intuitively appealing model of computing would be equally powerful as well.
+
+**Lambda calculus**  
+Formal system which permits to analize functions and their computation.  
+Based on the notion of parameterized expression (parameter introduces *λ*, hence the notation's name).  
+Allows one to define mathematical functions in a constructive/effective way.  
+Was the inspiration for *functional programming*.  
+An occurence of *x* is **free** in a term *t* if it is not in the body of an abstraction *λx.t*, otherwise it is **bound**
+
+**Functional programming**  
+*Do everything by composing functions, no mutable state and no side effect*.  
+Fucntional languages are an attempt to realize Church's lambda calculus in pratical form.  
+Key concepts:
+- high-order function (function which takes other functions as arguments or return as a result. eg. map, reduce, filter)
+- recursion (take the place of iteration)
+- powerful list facilities
+- polymorphism (typically universal parametric implicit)
+- garbage collection
+
+**Haskell**  
+similar several features in common eith ML family, but some differs:
+- types and type checking (doesn't allow cast or similar thing)
+- ad hoc polymorphism (overloading)
+- purely functional
+- lazy evaluation
+- imperative interpreter
+- additional types: tuples, lists, records
+- anonymous functions: *lambda abstraction* (f= \x -> x+1)
+- **lazy language**: functions and data constructors don't evaluate their arguments until they need them
+
+
+**Applicative order evaluation** (*parameter passing by value*): arguments are evaluated before applying the function  
+**Normal order evaluation** (*parameter passing by name*): function evaluated first, arguments if and when needed
+
+**Assignment** given *a:= b*  
+The left-hand side *a* of he assignment is an *l-value* which is an expression that should denote a location  
+A **reference to X** is the address of the base cell where X is stored  
+A **pointer to X** is a location containing the address of X  
+The right-hand side *b* of he assignment is an *r-value* which can be any  sintactically valid expression with a type that is compatible to the left-hand side
+Languages that adopt **value model** of variables copy the value of b into the location of a  
+Languages that adopt **reference model** of variables copy references, resulting in shared data values via multiple references
+
+**Parameter passing**  
+*Call by **Sharing***: parameter passing of data in the reference model. The value of the variables is passed as actual argument, which in fact is a reference to the (shared) data
+*Call by **Name***: parameter passing of data in Algol 60. The actual parameter is copied wherever the formal parameter appears on body, then the resulting code is executed. Since the actual parameter can contains names, it is passed in a **closure** with the environment at invocation time.  
+*Call by **Need***: parameter passing of data in Haskell. An expression passed as arguments is evaluated only if its value is needed. The argument is evaluated only the first time and further uses of argument do not need to re.evaluate it. Combined with *lazy data constructors*, this allow to construct pontentially infinite data structure.
+
+
+
+## ***S_17***
+
+**Recursion**  
+When soubroutines call themselves directly ora indirectly (mutual recursion)
+Is the natural solution when the solution of a problem is defined in terms of simplier version of the same problem, as for *tree traversal*  
+Recursion is in general less efficent than iteration, but good compilers for functional languages can perform good code optimization.  
+**Tail recursive functions** are functions in which no operations follow the recursive call(s) in the function, thus the function returns immediately after recursive call. A tail recursive call could reuse the soubroutine's frame on the run-time stack. Moreover the compiler replaces tail-recursive calls by jumps to the beginning of the function.
+
+**Java 8 Lambdas**  
+They enables:
+- functional programming in JavaBeans
+- to pass behaviors as well as datas to functions
+- introduction of lazy evaluation with stream processing
+- facilitation of parallel programming
+
+*See slides for lambdas syntax*
+
+**Implementation of lambdas**  
+The java 8 compiler first converts a lambda expr. into a function, compiling its code. Then it generates code to call the compiled function where needed.  
+Lambdas are instances of **functional interfaces**, thus an interface with exactly one abstract method with the annotation *@FunctionalInterface*.  
+L can be interpreted as instances of anonymous inner classes implementing the functional interfaces.  
+Arguments and result types of the lambda must match those of the unique abstract method of the functional interface.  
+
+**Method references**  
+MR can be used to pass an existing function in places where a lambda is expected.  
+The signatue of the referenced method needs to match the signature of the functional interface method.
+
+
+## ***S_18***
