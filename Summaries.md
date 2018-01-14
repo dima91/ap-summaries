@@ -18,12 +18,13 @@ The **Pragmatics** is cocerned with the way in which PL is inteded to be used in
 **Programming Paradigm =>** a PP is a style of programming, characterized by a particular selectionof a key concepts and abstractions (imperative, OO, concurrent, functional, logic).
 
 **Implementation of a PL *L***
+
   1. programs written in *L* must be executable
   2. every language *L* implicitly defines an **Abstract Machine** *Ml* having **L** as machine language
   3. implementing *Ml* on an existing host machine *Mo* (via compilation or interpretation or both) makes program written in **L** executable
 
 **Abstract Machine**  
-Given a programming language *L*, an **AM** *Ml* for *L* is a collection of data structures and algorithms which can perform the storage and execution of programs written in *L*. The *AM* is an abstraction of te concept of hardware machine.  
+Given a programming language *L*, an **AM** *Ml* for *L* is a collection of data structures and algorithms which can perform the storage and execution of programs written in *L*. The *AM* is an abstraction of the concept of hardware machine.  
 Viceversa, each *AM* **M** defines a language **Lm** including all programs which can be executed by the interpreter of *M*.  
 Programs are particular data on which the interpreter can act.
 
@@ -47,9 +48,10 @@ Interpretation facilitates interactive debugging and testing.
 All implementations of programming languages use both: compilation from internal to external representation, and interpretation for I/O operation (runtime support).  
 Can be modelled by indentifying a *Intermediate Abstract Machine* *Mi* with language *Li*: program in *L* is compiled to a program in *Li* and the obtained program is executed by an interpreter for *Mi*.
 The intermediate abstract machine is called **Virtual Machine**.  
-Using VMs involves higher *portability* (compile source, distribute the intermediate program and execute on any platform equipped with VM) and *portability* (for a new language *L*, just provide a compiler to intermediate language).
+Using VMs involves higher *portability* (compile source, distribute the intermediate program and execute on any platform equipped with VM) and *interoperability* (for a new language *L*, just provide a compiler to intermediate language).
 
 **Other compilation schemes**
+
 1. Pure compilation and static linking (Fortran systems)
 2. Compilation, assembly and static linking
 3. Compilation, assembly and dynamic linking
@@ -65,7 +67,8 @@ RSup is needed for memory managment (both stack and heap), I/O operations, inter
 **Java, JRE and JVM**  
 The **Java Runtime Environment** includes all what is needed to run compiled Java programs, that is the **JVM** and the **JCL** (Java Class Library, java API).
 The **Java Virtual Machine** is a multi-threaded stack based machine.  
-Its specification doesn't give implementation details but defines constraints, which all JVM implementations must support, about **class file format** and strong syntactic and structural constraints on its code, internal data types.  
+Its specification doesn't give implementation details but defines constraints, which all JVM implementations must support, about **class file format** and strong syntactic and structural constraints on its code, internal data types.
+
 *For other details see **JVM Internals!** pdf.*
 
 
@@ -78,6 +81,7 @@ do {
   execute the action for the opcode;
 } while (there is more to do);
 ```
+
 - variable length IS
 - simple to very complex
 - symbolic references
@@ -91,6 +95,7 @@ The **Operand stack** is used to pass arguments to methods, return a result from
 JVM support three *addressing modes*: **immediate a.m.** (constant is part of instruction), **indexed a.m.** (accessing variables from local variable array), **stack a.m.** (retreiving values from operand stack using *pop*).
 
 **IS properties**
+
 - has typed instructions (different opcodes for instruction for integers, floats, arrays, references types, ..);
 - non-orthogonality of the IS;
 - *byte*, *char* and *short* wrapped into *int* computational type;
@@ -99,6 +104,7 @@ JVM support three *addressing modes*: **immediate a.m.** (constant is part of in
 - accessing static fields (allocated in the method area): *getstatic* & *putstatic*;
 
 **Method invocation and return**  
+
 - *invokevirtual* for calling method on an object
 - *invokeinterface* for calling methods declared in an interface
 - *invokespecial* for calling constructors (not dinamically dispatched), private methods or supercalss methods
@@ -106,6 +112,7 @@ JVM support three *addressing modes*: **immediate a.m.** (constant is part of in
 - *invokedynamic* see **a first taste of invokedynamic**
 
 **Special instructions**  
+
 - *new* to create an object
 - *newarray* for array of primitive types
 - *anewarray*, *multianewarray* for array of reference types
@@ -122,6 +129,7 @@ A *contract* is a specification attached to an interface that mutually blinds cl
 
 
 **SC characteristics**  
+
 - modular (compatble, reusable, extensible)
 - reliable (correct, robust)
 - efficent
@@ -130,7 +138,8 @@ A *contract* is a specification attached to an interface that mutually blinds cl
 - are provided as binary units, without source code
 
 **Basic concepts of component model**  
-- *Component interface*: describes the operationsthat a component implements and that other components may use
+
+- *Component interface*: describes the operations that a component implements and that other components may use
 - *Composition mechanism*: the manner which different components can be composed to work together to accomplish some tasks
 - *Component platform*: a platform for the development and execution components
 
@@ -141,20 +150,23 @@ A *contract* is a specification attached to an interface that mutually blinds cl
 
 **Component forms**  
 There are several way which a component could have: **-> CHECK ME!**
-- ***Component Specification***: the specification of a unit of software that describes the behavior (defined as a set of interfaces) of a set of *Component Objects* and defines a unit of implementation. A Comp. Spec. is realized as a *Component Implementation*
-- *Component Interface*: a definition of a set of behaviors that can be offeredby a *Component Object*
-- *Component Implementation*: a sealization of a *Component Specification*, which is indipendently deployable. This means it can be installed and replaced indipendently of other components (not that is indipendent of other comp.)
-- *Installed Component*: an installed/deployed copy of a *Component Implementation*
-- *Component Object*: and instance of an *Installed Component*. It is a runtime concept, an object with its own data anda a unique identity. An *Installed Component* may have a multiple *Component Objects* or a single one
+
+- **Component Specification***: the specification of a unit of software that describes the behavior (defined as a set of interfaces) of a set of *Component Objects* and defines a unit of implementation. A Comp. Spec. is realized as a *Component Implementation*
+- ***Component Interface***: a definition of a set of behaviors that can be offeredby a *Component Object*
+- ***Component Implementation***: a sealization of a *Component Specification*, which is indipendently deployable. This means it can be installed and replaced indipendently of other components (not that is indipendent of other comp.)
+- ***Installed Component***: an installed/deployed copy of a *Component Implementation*
+- ***Component Object***: and instance of an *Installed Component*. It is a runtime concept, an object with its own data anda a unique identity. An *Installed Component* may have a multiple *Component Objects* or a single one
 
 
 **Component Based Software Engeneering**
+
 - The basis is the component
 - Components can be assembled according to the rules specified by the component model
 - Components are assembled through through their interfaces
 - A **Component Composition** is the process of assembling components to form an assembly, a larger component or an application
 - Component are performing in the context of a component framework
-- All parts conform to the component modelled- A component technology is a concrete implementation of a component model
+- All parts conform to the component modelled
+- A component technology is a concrete implementation of a component model
 
 
 ## ***S_08***
@@ -169,6 +181,7 @@ A Java Bean is a reusable software component model that can be manipulated visua
 Was defined a software component model for java, allowing vendors to create and ship java components that can be composed together into applications by end user.  
 
 Characteristics:
+
 - *granularity*: from small to medium
 - *portability*
 - *uniformity and semplicity*
@@ -194,13 +207,15 @@ There are different levels which a system can support reflection: from simple in
 Reflective capabilities need special support at the levels of language and compiler
 
 **Cons**
+
 + *performance overhead*
 + *security restrictions*
 + *exposure of internals*
 
 **In Java**  
+
 + java supports *inrospection* and *reflexive invocation*, but not code modification;
-+ for every type, the JVM maintains an associated object of class *java.lang.Class*, which reflects the type it representd. It is the entry point of reflection;
++ for every type, the JVM maintains an associated object of class *java.lang.Class*, which reflects the type it represents. It is the entry point of reflection;
 + three type of class memebers: *fields*, *methods*, *constructors* (thanks to **Member** interface, **Field**, **Method**, **Constructor** classes);
 + several methods to get infos about them;
 + for each memeber, the reflection API provides support to retreive declaration and type information, and operations unique to the member;
@@ -209,7 +224,8 @@ Reflective capabilities need special support at the levels of language and compi
 + *Constructor* objects are similar to methods but they haven't return value and an invocation of a constructor creates an object;
 
 
-** In .NET**  
+**In .NET**  
+
 + you can enumerate modules and types of an assembly;
 + obtain several infos for each type;
 + create istances of a types and invoke methods;
@@ -229,6 +245,7 @@ They provides **containers** for deploying components, which may provide at runt
 
 **Component Frameworks**  
 Frameworks that supports:
+
 + *development*, *deployment*, *composition*, *execution* of components designed accordign to a given **Component model**
 + the development of individual component
 + the composition/connection of components
@@ -249,30 +266,32 @@ With **ad hoc polymorphism** there is only one algorithm: a single (universal) s
 The BT of the unction name with the actual code to execute can be: at *compile time* (early/static binding), at *linking time*, at *execution time* (late/dynamic binding)
 
 **Type of polymorphism**
+
 + **ad hoc**
   + **overloading**: present in all languages, at least for built-in arithmetic operators. The code to execute is determined by the type of the arguments: *early binding* in statically typed languages, *late binding* in dynamically typed languages.
   + **overriding**: redefinition of method *m* of class *A* in a sublcass *B* of *A*. Resolved at runtime by the lookup done by the invokevirtual operation of JVM.
 + **universal**
   + **coercion**: automatic (implicit) conversion of an object to a different type. opposed to *casting* which is explicit.
   + **parametric**: *C++ templates* and *Java generics*
-    + **implicit**
-    + **expicit**
-      + **bounded**
+     * **implicit**
+     * **expicit**
+         * **bounded**
   + **inclusion**
-    + **overriding**
-    + **bounded**
+     + **overriding**
+     + **bounded**
 
 **Inclusion polymorphism**  
-aAlso known as *subtyping polymorphism*, or just **inheritance**.  
+Also known as *subtyping polymorphism*, or just **inheritance**.  
 (from Liskov) *substitution principle*: an object of a subtype can be used in any context where an object of the supertype is expected.
 
 **Parametric polymorphism** or **generic programming**  
-+ **C++ templates**: each concrete instantiation produces a copy of the generic code, specialized for that type. Supports parametric polymorphism. Compiler choose template that i s the best match;
+
++ **C++ templates**: each concrete instantiation produces a copy of the generic code, specialized for that type. Supports parametric polymorphism. Compiler choose template that is the best match;
 + **Java generics**:
 
 
 **STL**  
-Represent algorithms in as general form as possible without compromising efficiency. Extensive use of templates adn overloading. Efficent example of generic programming. Only use static binding, inlining, and iterators (fordecoupling algorithms from containers): not object oriented and no dynamic binding
+Represent algorithms in as general form as possible without compromising efficiency. Extensive use of templates and overloading. Efficent example of generic programming. Only use static binding, inlining, and iterators (fordecoupling algorithms from containers): not object oriented and no dynamic binding
 
 
 
@@ -285,9 +304,10 @@ A (function or class) primary template can be specialized by defining another te
 
 
 **C++ template instantiation**  
-1 compiler choose template that is best match
-2 template instance is created (similar to syntactic substitution of parameters)
-3 overloading resolution after substitution (fails if some operator is not defined for the type instance)
+
+1. compiler choose template that is best match
+2. template instance is created (similar to syntactic substitution of parameters)
+3. overloading resolution after substitution (fails if some operator is not defined for the type instance)
 
 *The compiler need both the declaration and the definition of the template function to instantiate it*: cannot compile definition of template and code instantiating the template searately!
 
@@ -303,6 +323,7 @@ Type checking ensures that overloading will succeded (different from C++)
 EG. Array<T2> and Array<T3> are not related by subtyping. But instead, if T2 is subype of T3, then T2[] is subtype of T3[]. Thus *Java (raw) arrays are covariant*.
 
 **Java rules**
+
 - Given two concrete types *A* and *B*, *MyClass<A>* has no relationship to *MyClass<B>*, regardless of wether or not *A* and *B* are related. *Subtyping in Java is invariant for generic classes.*
 - If *A* extends *B* and they are generic classes, for each type *C* we have that *A<C>* extends *B<C>*.
 
@@ -316,11 +337,12 @@ For wach reference variable, the dynamic type must be a subtype of the static on
 *? super T* denotes an unknown  subtype of T
 
 **PECS (Producer Extends, Consumer Super) principle**
+
 + use *? extends T* when you want to get values: supports *covariance*
 + use *? super T* when you want to insert values: supports *contravariance*
-+ never use *?* when you both obtain and produce values!
++ never use *?*  when you both obtain and produce values!
 
-** Type erasure**: all type of parameters of generic types are transformed to Object or to their first bound after compilation
+**Type erasure**: all type of parameters of generic types are transformed to Object or to their first bound after compilation
 
 ## ***S_15***
 
@@ -338,6 +360,7 @@ An occurence of *x* is **free** in a term *t* if it is not in the body of an abs
 *Do everything by composing functions, no mutable state and no side effect*.  
 Fucntional languages are an attempt to realize Church's lambda calculus in pratical form.  
 Key concepts:
+
 - high-order function (function which takes other functions as arguments or return as a result. eg. map, reduce, filter)
 - recursion (take the place of iteration)
 - powerful list facilities
@@ -345,7 +368,8 @@ Key concepts:
 - garbage collection
 
 **Haskell**  
-similar several features in common eith ML family, but some differs:
+similar several features in common with ML family, but some differs:
+
 - types and type checking (doesn't allow cast or similar thing)
 - ad hoc polymorphism (overloading)
 - purely functional
@@ -368,7 +392,7 @@ Languages that adopt **value model** of variables copy the value of b into the l
 Languages that adopt **reference model** of variables copy references, resulting in shared data values via multiple references
 
 **Parameter passing**  
-*Call by **Sharing***: parameter passing of data in the reference model. The value of the variables is passed as actual argument, which in fact is a reference to the (shared) data
+*Call by **Sharing***: parameter passing of data in the reference model. The value of the variables is passed as actual argument, which in fact is a reference to the (shared) data  
 *Call by **Name***: parameter passing of data in Algol 60. The actual parameter is copied wherever the formal parameter appears on body, then the resulting code is executed. Since the actual parameter can contains names, it is passed in a **closure** with the environment at invocation time.  
 *Call by **Need***: parameter passing of data in Haskell. An expression passed as arguments is evaluated only if its value is needed. The argument is evaluated only the first time and further uses of argument do not need to re.evaluate it. Combined with *lazy data constructors*, this allow to construct pontentially infinite data structure.
 
@@ -384,6 +408,7 @@ Recursion is in general less efficent than iteration, but good compilers for fun
 
 **Java 8 Lambdas**  
 They enables:
+
 - functional programming in JavaBeans
 - to pass behaviors as well as datas to functions
 - introduction of lazy evaluation with stream processing
@@ -406,9 +431,11 @@ The signatue of the referenced method needs to match the signature of the functi
 
 the *java.util.stream* package provides utilities to support functional-style operations on streams of values. **Streamss** differs from collections in several ways: they haven't *storage* (a stream is not a data structure that stores elements) and are *functional in nature* (an operation on a stream produces a result, but doesn't modify its source).  
 properties:
+
 - many stream operations can be implemented lazily, exposing opportunities for optimization. Stream operations are divided into **intermediate** operations and **terminal** operations.  
 *Intermediate operations are always lazy*.
 - they are possibly **unbounded**: collection have finite size, streams need not. Short-circuiting operations such as *limit(n)* or *findFirst()* can allow computations on infinite streams to complete in finite time.
+
 + the elements of a stream are only visited once during the life of a stream.
 
 A pipeline of operations contains: a **source** (which produce the elements of the stream), zero or more **intermediate operations** (lazy operations, which produce streams) and a **terminal operation** (which produces side-effects or non-stream values).  
@@ -425,6 +452,7 @@ S facilitate parallel execution thanks to runtime support which takes care of us
 **Type inference** is the process of associating a type with a symbol program, if possible, ensuring type safety.  
 A **data type** is an homogeneous collection of values, effectively presented, equipped with a set of operations which manipulate these values (various perspective depending on programming paradigm)  
 A **Type system** consists of:
+
 - the set of predefined types of the language
 - the mechanism which permit the definition if new types
 - the mechanism for the control (checking) of types, which include: equivalence rules, compatibility rules and rules and techniques for type inference
@@ -437,6 +465,7 @@ In **statically typed PL** all available expressions have fixed types and most o
 In a **dynamically typed PL** values have fixed types, but variables and expressions do not. Operans must be type-checked when they are computed at run-time.
 
 *Pro type inference*  
+
 - reduces syntactic overhead of expressive types
 - guaranteed to produce most general type
 - increasinly used also in imperative/OO languages
@@ -446,6 +475,7 @@ In a **dynamically typed PL** values have fixed types, but variables and express
 *Function application*: [f x] ==> [t0 = t1 -> t2], where t1 is domain of f (type of x) and t2 is range of f (result of application)  
 *Function declaration*: [f x = e] ==> [t0 = t1 -> t2], where t1 is domain of f (type of x) and t2 is range of f (type of e)  
 **Type inference steps**
+
 1. Parse program text to construct **parse tree**
 2. Assign type variables to nodes (t0, t1, t2, ...)
 3. Generate constraints
@@ -461,6 +491,7 @@ Functions may have multiple clauses, and may be recursive: in this case, to perf
 ## ***S_20***
 Haskell introduces the **Type Classes** to solve problems linked to overloading of operators (member, sort, arithmetic functions not work for all types or can't be overloaded in specific cases).  
 They :
+
 - provide concise types to describe overloaded functions, so no exponential blow-up
 - allow user to define functions using overloaded operations (e.g. square, squares, member ...)
 - allow user to declare new collections of overloaded functions: equality and arithmetic operators are not privileged buitl-ins
@@ -468,6 +499,7 @@ They :
 - fit within type inference framework
 
 **Type classes design overview**
+
 - Type class declaration: define a set of operations, give the set a name
 - type class instance declarations: specify the implementation for a particular type
 - qualified types (or type constraints): concisely express the operations required on otherwise polymorphic type
@@ -499,6 +531,7 @@ instance Nume Int where
  ```
  *A value of type (Num n) is  a dictionary of the Num operations for type n*  
  When you compile a definition, declaration and instantiation of type class:
+
  - the compiler translates each function that uses an overloaded symbol into a function with an extra parameter: **the dictionary**
  -references to overloaded symbols are reqritten by the compiler to lookup the symbol in the dictionary
  - the compiler converts each type class declaration into a dictionary type declaration and a set of selector functions
@@ -551,6 +584,7 @@ See Monads on the slides***
 ## ***S_22***
 **Scripting languages**  
 Common characteristics
+
 + Both batch and interactive use
 + economy of expression (concise syntax)
 + lack of declarations
