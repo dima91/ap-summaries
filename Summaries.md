@@ -243,7 +243,7 @@ Frameworks that supports:
 The **Polymorphism** is the possibility of the same function or type to have many forms.  
 It has two main forms: **Universal** or **Ad hoc**.  
 With **universal polymorphism** the same function denotes different algorithms, determined by the actual types.  
-With **ad hoc polymorphism** there is onl one algorithm: a single (universal) solution applies to different objects.
+With **ad hoc polymorphism** there is only one algorithm: a single (universal) solution applies to different objects.
 
 **Binding time**  
 The BT of the unction name with the actual code to execute can be: at *compile time* (early/static binding), at *linking time*, at *execution time* (late/dynamic binding)
@@ -413,9 +413,181 @@ properties:
 
 A pipeline of operations contains: a **source** (which produce the elements of the stream), zero or more **intermediate operations** (lazy operations, which produce streams) and a **terminal operation** (which produces side-effects or non-stream values).  
 Intermediate operations are performed on the stream elements and they are not processed until the terminal method is called.  
-A stream is considered consumed when a terminal operation is invoked.
+A stream is considered consumed when a terminal operation is invoked.  
+A **Collector** encapsulates the functions used as arguments to collect (Supplier, BiConsumer, BiConsumer), allowing for reuse of collection strategies and composition of collect operations.  
+A S can be an **infinite stream** which can be generated with *iterate* and *generate* operations.  
+S facilitate parallel execution thanks to runtime support which takes care of using multithreading for parallel execution, in a transparent way. If operations don't have side effects, thread-safety is guaranteed even if non-thread-safe collections are used.  
+*Order of processing stream elements depends on serial/parallel execution and intermediate operations*
+
+
+## ***S_19***
+
+**Type inference** is the process of associating a type with a symbol program, if possible, ensuring type safety.  
+A **data type** is an homogeneous collection of values, effectively presented, equipped with a set of operations which manipulate these values (various perspective depending on programming paradigm)  
+A **Type system** consists of:
+- the set of predefined types of the language
+- the mechanism which permit the definition if new types
+- the mechanism for the control (checking) of types, which include: equivalence rules, compatibility rules and rules and techniques for type inference
+- the specification as to whether (or which) constraints are statically or dynamically checked
+
+A **type error** occurswhen a value is used in a way that is inconsistent with its definition (hardware interrupt, OS exception, continue execution possibly with wrong values)  
+A language is **type safe (strogly typed)** when no program can violate the distinctions betweeen types defined in its type system. That is when no program, during its execution, can generate an unsignalled type error  
+To prevent type errors, before any operation is performed, its operands must be **type-checked** to ensure that they comply with the compatibility rules of the type system. Two type of languages: *statically typed* and *dynamically typed*.  
+In **statically typed PL** all available expressions have fixed types and most operands are type checked at compile time (even if some type checking is done at run-time).  
+In a **dynamically typed PL** values have fixed types, but variables and expressions do not. Operans must be type-checked when they are computed at run-time.
+
+*Pro type inference*  
+- reduces syntactic overhead of expressive types
+- guaranteed to produce most general type
+- increasinly used also in imperative/OO languages
+- illustrative example of a flow-intensitive static analysis algorithm.
+
+**Constraints**  
+*Function application*: [f x] ==> [t0 = t1 -> t2], where t1 is domain of f (type of x) and t2 is range of f (result of application)  
+*Function declaration*: [f x = e] ==> [t0 = t1 -> t2], where t1 is domain of f (type of x) and t2 is range of f (type of e)  
+**Type inference steps**
+1. Parse program text to construct **parse tree**
+2. Assign type variables to nodes (t0, t1, t2, ...)
+3. Generate constraints
+4. Solve constraints using *unification*
+5. Determine type of declaration
+
+*See example slides [19.23 ; 19.26]*
+
+Functions may have multiple clauses, and may be recursive: in this case, to perform type checking, we have to infer separate type for each clause, add constraints that alla clauses must have the same type, for recursive calls function has same type as its definition.  
+*For example, slides [19.32 ; 19.35]
+
+
+## ***S_20***
+Haskell introduces the **Type Classes** to solve problems linked to overloading of operators (member, sort, arithmetic functions not work for all types or can't be overloaded in specific cases).  
+They :
+- provide concise types to describe overloaded functions, so no exponential blow-up
+- allow user to define functions using overloaded operations (e.g. square, squares, member ...)
+- allow user to declare new collections of overloaded functions: equality and arithmetic operators are not privileged buitl-ins
+- generalize ML's eqtypes to arbitrary eqtypes
+- fit within type inference framework
+
+**Type classes design overview**
+- Type class declaration: define a set of operations, give the set a name
+- type class instance declarations: specify the implementation for a particular type
+- qualified types (or type constraints): concisely express the operations required on otherwise polymorphic type
+
+**Examples**
+```
+class Eq a where
+  (==)                  :: a -> a -> Bool
+
+ Here Eq the name of the class being defined, and == is the single operation in the class. This declaration may be read "a type a is an instance of the class Eq if there is an (overloaded) operation ==, of the appropriate type, defined on it." (Note that == is only defined on pairs of objects of the same type.)
+ ```
+ ```
+ -- Works for any type n that supports the Nume operations
+ square :: Num n => n -> n
+ square x = x * x
+
+ -- The class declaration says what the Num operations are
+ class Num a where
+   (+)    :: a -> a -> a
+   (*)    :: a -> a -> a
+   ....
+
+-- An instance declaartion for a type T says how the Nume operations are implemented on T's
+instance Nume Int where
+   a + b = intPlus a b
+   a * b = intTimes a b
+   negate a = intNeg a
+   ....
+ ```
+ *A value of type (Num n) is  a dictionary of the Num operations for type n*  
+ When you compile a definition, declaration and instantiation of type class:
+ - the compiler translates each function that uses an overloaded symbol into a function with an extra parameter: **the dictionary**
+ -references to overloaded symbols are reqritten by the compiler to lookup the symbol in the dictionary
+ - the compiler converts each type class declaration into a dictionary type declaration and a set of selector functions
+ - the compiler converts each instance delcaration into a dictionary of the appropriate type
+ - the compiler rewrites calls to overloaded functions to pass a dictionary. It uses the static, qualified type of the funcion to select the dictionary
+
+ In presence of overloading type, type inference infers a **qualified type Q => T**: T is a type inferred as usual and Q is a set oftype class predicates, called constraints
+
+**Type constructor** is a generic type with one ore more tyspe variables: `data Maybe a = Nothing | Just a`. In this case *Maybe a* is a possible undefined value of type a, and `f::a -> Maybe b` is a partial function from *a* to *b*.
+
+
+## ***S_21***
+
+*Problems of functional programming*: a useful program have to be able to interact with external environment (I/O, imperative update, error recovery ..) and affect it. Try to add imperative constructs "the usual way", but in what way? Using monads!
+
+While Type Classes are predicates over types, **Type Constructor Classes** are predicates over *Type constructor*. They (TCC) allow to define overloaded functions common to several type constructors.
+
+**Functor -> ?**
+
+**Monads** are formally constructors classes introducing operations for putting a value into a "box" (**return**) and for compose a function that retu "boxed" values (**bind**)  
+Example :
+```
+-- m is a type constructor and m a is the type of monadic values
+class Monad m where
+   return :: a -> m a
+   (>>=)  :: m a -> (a -> m b) -> m -> b   -- "bind"
+   (>>)   :: m a -> m b -> m b             -- "then"
+   ...
+   ...
+
+-- Maybe monad
+instance Monad Maybe where
+   return :: a -> Maybe a
+   return x = Just x
+   (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+   y >>= g= case y of
+              Nothing -> Nothing
+              Just x -> g x
+```
+
++ **return**, **bind** and **then** define a basic ways to compose computations
++ they are used in haskell libraries to define more complex composition operators and control structures (sequence, for-each loops, ..)
++ if a type constructor defining a library of computations is **monadic**, one gets automatically benefit of such libraries
 
 
 
+***WARNING!!!  
+See Monads on the slides***
 
-# continua da 18.10
+## ***S_22***
+**Scripting languages**  
+Common characteristics
++ Both batch and interactive use
++ economy of expression (concise syntax)
++ lack of declarations
++ simple default scoping rules
++ flexible dynamic typing: a variable can be interpreted differently depending on the context
++ easy to access to system facilities
++ sophisticated pattern matching and string manipulation
++ high level data types (storage is garbage collected)
++ quicker development cycle than industrial-quality languages
+
+Principal use cases:
++ shell languages
++ text processing and report generation
++ mathematics and statistics
++ "glue" languagesand general purpose scripting
++ extension languages
+
+
+*Shell languages*  
+**sh**, **csh**, **tcsh**, **bash**..  
+Provide many mechanism to manipulate file names, arguments and commands and to glue together other programs
+
+*Text processing and report generation*  
+**sed** (unix stream editor; no variables, no state; just a powerful filter) and **awk** (adds variables, state and richer control structures; also field and associative arrays).  
+Used also **perl** language (meant primarly for text processing but now has grown into a large and complex language; supports separate compilation, modularization and dynamic mechanism appropriate for large scale projects)
+
+*Mathematics and statistics*  
+**maple**, **mathematica**, **mathlab**, **octave**..  
+extensive support for numerical methods, symbolic mathematics, data vizualization, mathematical modeling  
+provide scripting languages oriented towards scientific and engineering applications
+
+*"Glue" languages and general purpose scripting*  
+**Reex**, **Perl**, **Tcl**, **Python**, **Ruby**
+
+*Extension languages*  
+An EL serves to increase the useulness of an applicaion by allowing the user to create new commands, generally using the existing commands as primitive.  
+To admit extension, a tool must incorporates or communicates with an interpreter for a scripting language, provide hooks that allow scripts to call the tool's existing commands, allow the user to tie newely defined commands to user interface events
+
+**Innovaive features**  
+...*see slides*
