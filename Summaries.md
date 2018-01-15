@@ -505,30 +505,29 @@ They :
 - qualified types (or type constraints): concisely express the operations required on otherwise polymorphic type
 
 **Examples**
-```
-class Eq a where
+
+class Eq a where  
   (==)                  :: a -> a -> Bool
 
- Here Eq the name of the class being defined, and == is the single operation in the class. This declaration may be read "a type a is an instance of the class Eq if there is an (overloaded) operation ==, of the appropriate type, defined on it." (Note that == is only defined on pairs of objects of the same type.)
- ```
- ```
- -- Works for any type n that supports the Nume operations
- square :: Num n => n -> n
+-- Here Eq the name of the class being defined, and == is the single operation in the class. This declaration may be read "a type a is an instance of the class Eq if there is an (overloaded) operation ==, of the appropriate type, defined on it." (Note that == is only defined on pairs of objects of the same type.)
+
+ -- Works for any type n that supports the Nume operations  
+ square :: Num n => n -> n  
  square x = x * x
 
  -- The class declaration says what the Num operations are
- class Num a where
-   (+)    :: a -> a -> a
-   (*)    :: a -> a -> a
+ class Num a where  
+   (+)    :: a -> a -> a  
+   (*)    :: a -> a -> a  
    ....
 
--- An instance declaartion for a type T says how the Nume operations are implemented on T's
-instance Nume Int where
-   a + b = intPlus a b
-   a * b = intTimes a b
+-- An instance declaartion for a type T says how the Nume operations are implemented on T's  
+instance Nume Int where  
+   a + b = intPlus a b  
+   a * b = intTimes a b  
    negate a = intNeg a
-   ....
- ```
+
+
  *A value of type (Num n) is  a dictionary of the Num operations for type n*  
  When you compile a definition, declaration and instantiation of type class:
 
